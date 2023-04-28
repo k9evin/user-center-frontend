@@ -1,6 +1,6 @@
 import Footer from '@/components/Footer';
 import { register } from '@/services/ant-design-pro/api';
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { LockOutlined, UserOutlined, IdcardOutlined } from '@ant-design/icons';
 import { LoginForm, ProFormText } from '@ant-design/pro-components';
 import { message, Tabs } from 'antd';
 import React, { useState } from 'react';
@@ -130,6 +130,22 @@ const Register: React.FC = () => {
                     min: 8,
                     type: 'string',
                     message: '密码长度不能小于8！',
+                  },
+                ]}
+              />
+              <ProFormText
+                name="netId"
+                fieldProps={{
+                  size: 'large',
+                  prefix: <IdcardOutlined className={styles.prefixIcon} />,
+                }}
+                placeholder={intl.formatMessage({
+                  id: 'pages.login.netId.placeholder',
+                })}
+                rules={[
+                  {
+                    required: true,
+                    message: <FormattedMessage id="pages.login.netId.required" />,
                   },
                 ]}
               />
