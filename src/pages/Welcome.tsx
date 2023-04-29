@@ -1,10 +1,10 @@
-import { PageContainer } from '@ant-design/pro-components';
-import { Alert, Card, Typography } from 'antd';
+import {PageContainer} from '@ant-design/pro-components';
+import {Alert, Card, Typography} from 'antd';
 import React from 'react';
-import { FormattedMessage, useIntl } from 'umi';
+import {FormattedMessage, useIntl} from 'umi';
 import styles from './Welcome.less';
 
-const CodePreview: React.FC = ({ children }) => (
+const CodePreview: React.FC = ({children}) => (
   <pre className={styles.pre}>
     <code>
       <Typography.Text copyable>{children}</Typography.Text>
@@ -37,7 +37,7 @@ const Welcome: React.FC = () => {
             rel="noopener noreferrer"
             target="__blank"
           >
-            <FormattedMessage id="pages.welcome.link" defaultMessage="Welcome" />
+            <FormattedMessage id="pages.welcome.link" defaultMessage="Welcome"/>
           </a>
         </Typography.Text>
         <CodePreview>yarn add @ant-design/pro-components</CodePreview>

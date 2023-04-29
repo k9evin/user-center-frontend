@@ -1,9 +1,9 @@
-import { getNotices } from '@/services/ant-design-pro/api';
-import { message, Tag } from 'antd';
-import { groupBy } from 'lodash';
+import {getNotices} from '@/services/ant-design-pro/api';
+import {message, Tag} from 'antd';
+import {groupBy} from 'lodash';
 import moment from 'moment';
-import { useEffect, useState } from 'react';
-import { useModel, useRequest } from 'umi';
+import {useEffect, useState} from 'react';
+import {useModel, useRequest} from 'umi';
 import styles from './index.less';
 import NoticeIcon from './NoticeIcon';
 
@@ -19,7 +19,7 @@ const getNoticeData = (notices: API.NoticeIconItem[]): Record<string, API.Notice
   }
 
   const newNotices = notices.map((notice) => {
-    const newNotice = { ...notice };
+    const newNotice = {...notice};
 
     if (newNotice.datetime) {
       newNotice.datetime = moment(notice.datetime as string).fromNow();
@@ -70,10 +70,10 @@ const getUnreadData = (noticeData: Record<string, API.NoticeIconItem[]>) => {
 };
 
 const NoticeIconView: React.FC = () => {
-  const { initialState } = useModel('@@initialState');
-  const { currentUser } = initialState || {};
+  const {initialState} = useModel('@@initialState');
+  const {currentUser} = initialState || {};
   const [notices, setNotices] = useState<API.NoticeIconItem[]>([]);
-  const { data } = useRequest(getNotices);
+  const {data} = useRequest(getNotices);
 
   useEffect(() => {
     setNotices(data || []);
@@ -85,7 +85,7 @@ const NoticeIconView: React.FC = () => {
   const changeReadState = (id: string) => {
     setNotices(
       notices.map((item) => {
-        const notice = { ...item };
+        const notice = {...item};
         if (notice.id === id) {
           notice.read = true;
         }
@@ -97,7 +97,7 @@ const NoticeIconView: React.FC = () => {
   const clearReadState = (title: string, key: string) => {
     setNotices(
       notices.map((item) => {
-        const notice = { ...item };
+        const notice = {...item};
         if (notice.type === key) {
           notice.read = true;
         }

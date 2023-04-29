@@ -1,10 +1,10 @@
-import { SearchOutlined } from '@ant-design/icons';
-import type { InputRef } from 'antd';
-import { AutoComplete, Input } from 'antd';
-import type { AutoCompleteProps } from 'antd/es/auto-complete';
+import {SearchOutlined} from '@ant-design/icons';
+import type {InputRef} from 'antd';
+import {AutoComplete, Input} from 'antd';
+import type {AutoCompleteProps} from 'antd/es/auto-complete';
 import classNames from 'classnames';
 import useMergedState from 'rc-util/es/hooks/useMergedState';
-import React, { useRef } from 'react';
+import React, {useRef} from 'react';
 import styles from './index.less';
 
 export type HeaderSearchProps = {
@@ -55,7 +55,7 @@ const HeaderSearch: React.FC<HeaderSearchProps> = (props) => {
           inputRef.current.focus();
         }
       }}
-      onTransitionEnd={({ propertyName }) => {
+      onTransitionEnd={({propertyName}) => {
         if (propertyName === 'width' && !searchMode) {
           if (onVisibleChange) {
             onVisibleChange(searchMode);

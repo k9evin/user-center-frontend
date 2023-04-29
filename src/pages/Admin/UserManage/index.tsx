@@ -1,8 +1,8 @@
-import type { ActionType, ProColumns } from '@ant-design/pro-components';
-import { ProTable, TableDropdown } from '@ant-design/pro-components';
-import { useRef } from 'react';
-import { searchUsers } from '@/services/ant-design-pro/api';
-import { Image } from 'antd';
+import type {ActionType, ProColumns} from '@ant-design/pro-components';
+import {ProTable, TableDropdown} from '@ant-design/pro-components';
+import {useRef} from 'react';
+import {searchUsers} from '@/services/ant-design-pro/api';
+import {Image} from 'antd';
 
 export const waitTimePromise = async (time: number = 100) => {
   return new Promise((resolve) => {
@@ -52,8 +52,8 @@ const columns: ProColumns<API.CurrentUser>[] = [
     dataIndex: 'gender',
     valueType: 'select',
     valueEnum: {
-      0: { text: '女' },
-      1: { text: '男' },
+      0: {text: '女'},
+      1: {text: '男'},
     },
   },
   {
@@ -75,8 +75,8 @@ const columns: ProColumns<API.CurrentUser>[] = [
     dataIndex: 'userRole',
     valueType: 'select',
     valueEnum: {
-      0: { text: '普通用户', status: 'Default' },
-      1: { text: '管理员', status: 'Success' },
+      0: {text: '普通用户', status: 'Default'},
+      1: {text: '管理员', status: 'Success'},
     },
   },
   {
@@ -109,8 +109,8 @@ const columns: ProColumns<API.CurrentUser>[] = [
         key="actionGroup"
         onSelect={() => action?.reload()}
         menus={[
-          { key: 'copy', name: '复制' },
-          { key: 'delete', name: '删除' },
+          {key: 'copy', name: '复制'},
+          {key: 'delete', name: '删除'},
         ]}
       />,
     ],
@@ -128,7 +128,7 @@ export default () => {
         // console.log(sort, filter);
         await waitTime(2000);
         const userList = await searchUsers();
-        return { data: userList };
+        return {data: userList};
         // request<{
         //   data: CurrentUser[];
         // }>('https://proapi.azurewebsites.net/github/issues', {
@@ -168,7 +168,8 @@ export default () => {
       }}
       pagination={{
         pageSize: 5,
-        onChange: (page) => {},
+        onChange: (page) => {
+        },
         // console.log(page),
       }}
       dateFormatter="string"

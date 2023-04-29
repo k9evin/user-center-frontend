@@ -24,6 +24,16 @@ declare namespace API {
 
   type RegisterResult = number;
 
+  /**
+   * 对接后端的通用返回类
+   */
+  type BaseResponse<T> = {
+    code: number;
+    data: T;
+    message: string;
+    description: string;
+  };
+
   type PageParams = {
     current?: number;
     pageSize?: number;
