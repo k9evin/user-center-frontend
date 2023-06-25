@@ -1,8 +1,8 @@
-import type {ActionType, ProColumns} from '@ant-design/pro-components';
-import {ProTable, TableDropdown} from '@ant-design/pro-components';
-import {useRef} from 'react';
-import {searchUsers} from '@/services/ant-design-pro/api';
-import {Image} from 'antd';
+import type { ActionType, ProColumns } from '@ant-design/pro-components';
+import { ProTable, TableDropdown } from '@ant-design/pro-components';
+import { useRef } from 'react';
+import { searchUsers } from '@/services/ant-design-pro/api';
+import { Image, Tag } from 'antd';
 
 export const waitTimePromise = async (time: number = 100) => {
   return new Promise((resolve) => {
@@ -20,7 +20,6 @@ const columns: ProColumns<API.CurrentUser>[] = [
   {
     dataIndex: 'id ',
     valueType: 'indexBorder',
-    width: 48,
   },
   {
     title: '用户名',
@@ -52,8 +51,8 @@ const columns: ProColumns<API.CurrentUser>[] = [
     dataIndex: 'gender',
     valueType: 'select',
     valueEnum: {
-      0: {text: '女'},
-      1: {text: '男'},
+      0: { text: '女' },
+      1: { text: '男' },
     },
   },
   {
@@ -69,20 +68,25 @@ const columns: ProColumns<API.CurrentUser>[] = [
   {
     title: '状态',
     dataIndex: 'userStatus',
+    valueType: 'select',
+    render: (_, record) => {
+      const color = record.userStatus === 0 ? 'green' : 'red';
+      const text = record.userStatus === 0 ? '正常' : '冻结';
+      return <Tag color={color}>{text}</Tag>;
+    },
   },
   {
     title: '角色',
     dataIndex: 'userRole',
     valueType: 'select',
     valueEnum: {
-      0: {text: '普通用户', status: 'Default'},
-      1: {text: '管理员', status: 'Success'},
+      0: { text: '普通用户', status: 'Default' },
+      1: { text: '管理员', status: 'Success' },
     },
   },
   {
     title: '用户编号',
     dataIndex: 'netId',
-    copyable: true,
   },
   {
     title: '创建时间',
@@ -109,8 +113,8 @@ const columns: ProColumns<API.CurrentUser>[] = [
         key="actionGroup"
         onSelect={() => action?.reload()}
         menus={[
-          {key: 'copy', name: '复制'},
-          {key: 'delete', name: '删除'},
+          { key: 'copy', name: '复制' },
+          { key: 'delete', name: '删除' },
         ]}
       />,
     ],
@@ -119,6 +123,7 @@ const columns: ProColumns<API.CurrentUser>[] = [
 
 export default () => {
   const actionRef = useRef<ActionType>();
+  // @ts-ignore
   return (
     <ProTable<API.CurrentUser>
       columns={columns}
@@ -128,7 +133,7 @@ export default () => {
         // console.log(sort, filter);
         await waitTime(2000);
         const userList = await searchUsers();
-        return {data: userList};
+        return { data: userList };
         // request<{
         //   data: CurrentUser[];
         // }>('https://proapi.azurewebsites.net/github/issues', {
@@ -168,8 +173,7 @@ export default () => {
       }}
       pagination={{
         pageSize: 5,
-        onChange: (page) => {
-        },
+        onChange: (page) => {},
         // console.log(page),
       }}
       dateFormatter="string"

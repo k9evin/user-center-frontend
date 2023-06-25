@@ -1,17 +1,17 @@
 import Footer from '@/components/Footer';
-import {login} from '@/services/ant-design-pro/api';
+import { login } from '@/services/ant-design-pro/api';
 
-import {LockOutlined, UserOutlined} from '@ant-design/icons';
-import {LoginForm, ProFormCheckbox, ProFormText} from '@ant-design/pro-components';
-import {Alert, message, Tabs} from 'antd';
-import React, {useState} from 'react';
-import {FormattedMessage, history, Link, SelectLang, useIntl, useModel} from 'umi';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { LoginForm, ProFormCheckbox, ProFormText } from '@ant-design/pro-components';
+import { Alert, message, Tabs } from 'antd';
+import React, { useState } from 'react';
+import { FormattedMessage, history, Link, SelectLang, useIntl, useModel } from 'umi';
 import styles from './index.less';
-import {SYSTEM_LOGO} from '@/constant';
+import { SYSTEM_LOGO } from '@/constant';
 
 const LoginMessage: React.FC<{
   content: string;
-}> = ({content}) => (
+}> = ({ content }) => (
   <Alert
     style={{
       marginBottom: 24,
@@ -25,7 +25,7 @@ const LoginMessage: React.FC<{
 const Login: React.FC = () => {
   const [userLoginState, setUserLoginState] = useState<API.LoginResult>({});
   const [type, setType] = useState<string>('account');
-  const {initialState, setInitialState} = useModel('@@initialState');
+  const { initialState, setInitialState } = useModel('@@initialState');
 
   const intl = useIntl();
 
@@ -42,7 +42,7 @@ const Login: React.FC = () => {
   const handleSubmit = async (values: API.LoginParams) => {
     try {
       // 登录
-      const user = await login({...values, type});
+      const user = await login({ ...values, type });
       if (user) {
         const defaultLoginSuccessMessage = intl.formatMessage({
           id: 'pages.login.success',
@@ -52,8 +52,8 @@ const Login: React.FC = () => {
         await fetchUserInfo();
         /** 此方法会跳转到 redirect 参数所在的位置 */
         if (!history) return;
-        const {query} = history.location;
-        const {redirect} = query as { redirect: string };
+        const { query } = history.location;
+        const { redirect } = query as { redirect: string };
         history.push(redirect || '/');
         return;
       }
@@ -67,18 +67,19 @@ const Login: React.FC = () => {
       message.error(defaultLoginFailureMessage);
     }
   };
-  const {status, type: loginType} = userLoginState;
+  const { status, type: loginType } = userLoginState;
 
   return (
     <div className={styles.container}>
       <div className={styles.lang} data-lang>
-        {SelectLang && <SelectLang/>}
+        {SelectLang && <SelectLang />}
       </div>
+      s
       <div className={styles.content}>
         <LoginForm
-          logo={<img alt="logo" src={SYSTEM_LOGO}/>}
+          logo={<img alt="logo" src={SYSTEM_LOGO} />}
           title="编程猫"
-          subTitle={intl.formatMessage({id: 'pages.layouts.userLayout.title'})}
+          subTitle={intl.formatMessage({ id: 'pages.layouts.userLayout.title' })}
           initialValues={{
             autoLogin: true,
           }}
@@ -110,7 +111,7 @@ const Login: React.FC = () => {
                 name="userAccount"
                 fieldProps={{
                   size: 'large',
-                  prefix: <UserOutlined className={styles.prefixIcon}/>,
+                  prefix: <UserOutlined className={styles.prefixIcon} />,
                 }}
                 placeholder={intl.formatMessage({
                   id: 'pages.login.username.placeholder',
@@ -132,7 +133,7 @@ const Login: React.FC = () => {
                 name="userPassword"
                 fieldProps={{
                   size: 'large',
-                  prefix: <LockOutlined className={styles.prefixIcon}/>,
+                  prefix: <LockOutlined className={styles.prefixIcon} />,
                 }}
                 placeholder={intl.formatMessage({
                   id: 'pages.login.password.placeholder',
@@ -158,14 +159,14 @@ const Login: React.FC = () => {
             </>
           )}
 
-          {status === 'error' && loginType === 'mobile' && <LoginMessage content="验证码错误"/>}
+          {status === 'error' && loginType === 'mobile' && <LoginMessage content="验证码错误" />}
           <div
             style={{
               marginBottom: 24,
             }}
           >
             <ProFormCheckbox noStyle name="autoLogin">
-              <FormattedMessage id="pages.login.rememberMe" defaultMessage="自动登录"/>
+              <FormattedMessage id="pages.login.rememberMe" defaultMessage="自动登录" />
             </ProFormCheckbox>
             <a
               style={{
@@ -175,7 +176,7 @@ const Login: React.FC = () => {
               target="_blank"
               rel="noreferrer"
             >
-              <FormattedMessage id="pages.login.forgotPassword" defaultMessage="忘记密码"/>
+              <FormattedMessage id="pages.login.forgotPassword" defaultMessage="忘记密码" />
             </a>
           </div>
           <p>
@@ -193,7 +194,7 @@ const Login: React.FC = () => {
           </p>
         </LoginForm>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };
