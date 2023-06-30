@@ -1,11 +1,11 @@
-import { outLogin } from '@/services/ant-design-pro/api';
-import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
-import { Avatar, Menu, Spin } from 'antd';
-import type { ItemType } from 'antd/lib/menu/hooks/useItems';
-import { stringify } from 'querystring';
-import type { MenuInfo } from 'rc-menu/lib/interface';
-import React, { useCallback } from 'react';
-import { history, useModel } from 'umi';
+import {outLogin} from '@/services/ant-design-pro/api';
+import {LogoutOutlined, SettingOutlined, UserOutlined} from '@ant-design/icons';
+import {Avatar, Menu, Spin} from 'antd';
+import type {ItemType} from 'antd/lib/menu/hooks/useItems';
+import {stringify} from 'querystring';
+import type {MenuInfo} from 'rc-menu/lib/interface';
+import React, {useCallback} from 'react';
+import {history, useModel} from 'umi';
 import HeaderDropdown from '../HeaderDropdown';
 import styles from './index.less';
 
@@ -36,10 +36,15 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
 
   const onMenuClick = useCallback(
     (event: MenuInfo) => {
-      const { key } = event;
+      const {key} = event;
       if (key === 'logout') {
-        setInitialState((s) => ({ ...s, currentUser: undefined }));
+        setInitialState((s) => ({...s, currentUser: undefined}));
         loginOut();
+        return;
+      }
+      if (key === 'settings') {
+        // redirect to account settings page
+        history.push('/accountSettings');
         return;
       }
       history.push(`/account/${key}`);
@@ -82,15 +87,20 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
             icon: <SettingOutlined />,
             label: '个人设置',
           },
-          {
-            type: 'divider' as const,
-          },
-        ]
+        {
+          type: 'divider' as const,
+        },
+      ]
       : []),
     {
       key: 'logout',
-      icon: <LogoutOutlined />,
+      icon: <LogoutOutlined/>,
       label: '退出登录',
+    },
+    {
+      key: 'settings',
+      icon: <UserOutlined/>,
+      label: '个人设置',
     },
   ];
 

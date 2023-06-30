@@ -1,13 +1,13 @@
 import Footer from '@/components/Footer';
-import { login } from '@/services/ant-design-pro/api';
+import {login} from '@/services/ant-design-pro/api';
 
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { LoginForm, ProFormCheckbox, ProFormText } from '@ant-design/pro-components';
-import { Alert, message, Tabs } from 'antd';
-import React, { useState } from 'react';
-import { FormattedMessage, history, Link, SelectLang, useIntl, useModel } from 'umi';
+import {LockOutlined, UserOutlined} from '@ant-design/icons';
+import {LoginForm, ProFormCheckbox, ProFormText} from '@ant-design/pro-components';
+import {Alert, notification, Tabs} from 'antd';
+import React, {useState} from 'react';
+import {FormattedMessage, history, Link, SelectLang, useIntl, useModel} from 'umi';
 import styles from './index.less';
-import { SYSTEM_LOGO } from '@/constant';
+import {SYSTEM_LOGO} from '@/constant';
 
 const LoginMessage: React.FC<{
   content: string;
@@ -26,7 +26,6 @@ const Login: React.FC = () => {
   const [userLoginState, setUserLoginState] = useState<API.LoginResult>({});
   const [type, setType] = useState<string>('account');
   const { initialState, setInitialState } = useModel('@@initialState');
-
   const intl = useIntl();
 
   const fetchUserInfo = async () => {
@@ -48,12 +47,15 @@ const Login: React.FC = () => {
           id: 'pages.login.success',
           defaultMessage: '登录成功！',
         });
-        message.success(defaultLoginSuccessMessage);
+        notification.success({
+          message: '通知',
+          description: defaultLoginSuccessMessage,
+        });
         await fetchUserInfo();
         /** 此方法会跳转到 redirect 参数所在的位置 */
         if (!history) return;
-        const { query } = history.location;
-        const { redirect } = query as { redirect: string };
+        const {query} = history.location;
+        const {redirect} = query as { redirect: string };
         history.push(redirect || '/');
         return;
       }
@@ -64,7 +66,10 @@ const Login: React.FC = () => {
         id: 'pages.login.failure',
         defaultMessage: '登录失败，请重试！',
       });
-      message.error(defaultLoginFailureMessage);
+      notification.error({
+        message: '通知',
+        description: defaultLoginFailureMessage,
+      });
     }
   };
   const { status, type: loginType } = userLoginState;

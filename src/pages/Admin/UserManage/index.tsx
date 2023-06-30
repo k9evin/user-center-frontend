@@ -1,8 +1,9 @@
-import type { ActionType, ProColumns } from '@ant-design/pro-components';
-import { ProTable, TableDropdown } from '@ant-design/pro-components';
-import { useRef } from 'react';
-import { searchUsers } from '@/services/ant-design-pro/api';
-import { Image, Tag } from 'antd';
+import type {ActionType, ProColumns} from '@ant-design/pro-components';
+import {ProTable} from '@ant-design/pro-components';
+import React, {useRef} from 'react';
+import {searchUsers} from '@/services/ant-design-pro/api';
+import {QuestionCircleOutlined} from '@ant-design/icons';
+import {Image, message, Popconfirm, Tag} from 'antd';
 
 export const waitTimePromise = async (time: number = 100) => {
   return new Promise((resolve) => {
@@ -14,6 +15,14 @@ export const waitTimePromise = async (time: number = 100) => {
 
 export const waitTime = async (time: number = 100) => {
   await waitTimePromise(time);
+};
+
+const confirm = () => {
+  message.success('Click on Yes');
+};
+
+const cancel = () => {
+  message.error('取消删除');
 };
 
 const columns: ProColumns<API.CurrentUser>[] = [
@@ -106,17 +115,17 @@ const columns: ProColumns<API.CurrentUser>[] = [
       >
         编辑
       </a>,
-      <a href={record.url} target="_blank" rel="noopener noreferrer" key="view">
-        查看
-      </a>,
-      <TableDropdown
-        key="actionGroup"
-        onSelect={() => action?.reload()}
-        menus={[
-          { key: 'copy', name: '复制' },
-          { key: 'delete', name: '删除' },
-        ]}
-      />,
+      <Popconfirm
+        key="delete"
+        title="你确定要删除次账号吗？"
+        onConfirm={confirm}
+        onCancel={cancel}
+        okText="确认"
+        cancelText="取消"
+        icon={<QuestionCircleOutlined style={{color: 'red'}}/>}
+      >
+        <a>删除</a>
+      </Popconfirm>,
     ],
   },
 ];
@@ -129,16 +138,10 @@ export default () => {
       columns={columns}
       actionRef={actionRef}
       cardBordered
-      request={async (params = {}, sort, filter) => {
-        // console.log(sort, filter);
+      request={async () => {
         await waitTime(2000);
         const userList = await searchUsers();
-        return { data: userList };
-        // request<{
-        //   data: CurrentUser[];
-        // }>('https://proapi.azurewebsites.net/github/issues', {
-        //   params,
-        // });
+        return {data: userList};
       }}
       editable={{
         type: 'multiple',
